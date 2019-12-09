@@ -21,10 +21,26 @@ public class Card {
 	
 	public Card(int theSuit, int theValue) {
 		
+	}
+	
+	public int getSuit() {
+		return suit;
+	}
+	
+	public int getValue() {
+		return value;
+	}
+	
+	public String suitToString() {
 		
 	}
 	
+	public String toString() {
+		
+	}
 	
-	
+	public boolean equals() {
+		
+	}
 	
 }
