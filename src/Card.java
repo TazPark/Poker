@@ -39,8 +39,5 @@ public class Card {
 		
 	}
 	
-	public boolean equals() {
-		
-	}
 	
 }
