@@ -20,7 +20,8 @@ public class Card {
 	}
 	
 	public Card(int theSuit, int theValue) {
-		
+		this.value = theValue;
+		this.suit = theSuit;
 	}
 	
 	public int getSuit() {
