@@ -278,6 +278,8 @@ public class Hand {
 	public int compareTo(Hand oppHand) {
 		this.sortByValue();
 		oppHand.sortByValue();
+		int player = 0;
+		int opponent = 0;
 		
 		boolean draw = true;
 		for(int i = 0; i < count; i++) {
@@ -289,16 +291,48 @@ public class Hand {
 			return 66;
 		}
 		
+		//If Player has either a Royal && Straight Flush
+		if(this.hasFlush() == true && this.hasStraight() == true) {
+			if(this.Hand[2].getValue() == 12) {
+				player = 10;
+			}else {
+				player = 9;	
+			}
+		}
+		//If player has FourOfAKind
+		else if(this.hasFourOfAKind() == true) {
+			player = 8;
+		}
+		//If player has Full House
+		else if(this.hasFullHouse() == true) {
+			player = 7;
+		}
+		//If player has Flush
+		else if(this.hasFlush() == true) {
+			player = 6;
+		}
+		//If Player has Straight
+		else if(this.hasStraight() == true) {
+			player = 5;
+		}
+		//If player has ThreeOfAKind
+		else if(this.hasTriplet() == true) {
+			player = 4;
+		}
+		//If player has 2 pair
+		else if(this.numPairs() == 2) {
+			player = 3;
+		}
+		//If player has 1 pair
+		else if(this.numPairs() == 1) {
+			player = 2;
+		}
+		//if Player has nothing
+		else {
+			player = 0;
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		
 		
