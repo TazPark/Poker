@@ -392,6 +392,11 @@ public class Hand {
 			case 10:
 				switch(opponent) {
 					case 10:
+						if(this.Hand[0].getSuit() > oppHand.Hand[0].getSuit()) {
+							return 99;
+						} else {
+							return -99;
+						}
 					case 9:	
 						return 99;
 					case 8: 
@@ -417,6 +422,11 @@ public class Hand {
 				case 10:
 					return -99;
 				case 9:
+				if(this.Hand[0].getSuit() > oppHand.Hand[0].getSuit()) {
+					return 99;
+				} else {
+					return -99;
+				}
 				case 8: 
 					return 99;
 				case 7: 
@@ -442,6 +452,14 @@ public class Hand {
 				case 9:	
 					return -99;
 				case 8:
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+						return 99;
+					}
+					else {
+						return -99;
+					}
 				case 7: 
 					return 99;
 				case 6: 
@@ -467,6 +485,14 @@ public class Hand {
 				case 8:
 					return -99;
 				case 7: 
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+						return 99;
+					}
+					else {
+						return -99;
+					}
 				case 6: 
 					return 99;
 				case 5: 
@@ -492,6 +518,20 @@ public class Hand {
 				case 7: 
 					return -99;
 				case 6: 
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.Hand[2].getSuit() > oppHand.Hand[2].getSuit()) {
+						return 99;
+					} else if (this.Hand[2].getSuit() < oppHand.Hand[2].getSuit()) {
+						return -99;
+					}else if(this.Hand[2].getSuit() == oppHand.Hand[2].getSuit()) {
+						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+							return 99;
+						}
+						else {
+							return -99;
+						}
+					}
 				case 5: 
 					return 99;
 				case 4:
@@ -517,6 +557,7 @@ public class Hand {
 				case 6: 
 					return -99;
 				case 5: 
+					
 				case 4:
 					return 99;
 				case 3:
@@ -542,6 +583,14 @@ public class Hand {
 				case 5: 
 					return -99;
 				case 4:
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+						return 99;
+					}
+					else {
+						return -99;
+					}
 				case 3:
 					return 99;
 				case 2:
