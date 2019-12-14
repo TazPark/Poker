@@ -33,11 +33,24 @@ public class Card {
 	}
 	
 	public String suitToString() {
-		
+		switch(suit)
+			case 0: return "Clubs";
+			case 1: return "Diamonds";
+			case 2: return "Hearts";
+			case 3: return "Spades";
+	}
+	
+	public String valueToString() {
+		switch(value)
+			case 1: return "Ace";
+			case 11: return "Jack";
+			case 12: return "Queen";
+			case 13: return "King";
+			default: return value;
 	}
 	
 	public String toString() {
-		
+		return this.valueToString() + " of " + this.suitToString();
 	}
 	
 	
