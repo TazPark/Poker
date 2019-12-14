@@ -3,15 +3,21 @@ import java.util.ArrayList;
 public class Hand {
 	
 	private Card[] Hand;
-	private int count;
+	private int size;
 	
 	Hand(){
 		Hand = new Card[5];
+		size = 0;
 	}
 	
 	//clears the hand of all cards
 	public void clear() {
-		
+		for(int i = 0 ; i< Hand.length; i++){
+			
+			Hand[i] = null; 
+			
+		}
+		  size = 0;
 	}
 	
 	//adds a new card to hand
@@ -19,7 +25,7 @@ public class Hand {
 		for(int i=0 ; i< this.Hand.length; i++){ 
 			if (Hand[i] == null){
 				this.Hand[i] = c;
-				count = count + 1;
+				size = size + 1;
 				break;
 			}
 		 }
@@ -30,7 +36,7 @@ public class Hand {
 		for(int i=0 ; i<this.Hand.length; i++){ 
 			if (this.Hand[i].equals(c)){
 				this.Hand[i] = null;
-				count = count-1;
+				size = size-1;
 			}
 		}
 	}
@@ -38,7 +44,7 @@ public class Hand {
 	//sorts hand by value (Smallest to largest)
 	public void sortByValue() {
 		
-		int handSize = count;
+		int handSize = size;
 		int i = 0;
 		int a = 0;
 		int smallNumIndex = 0;
@@ -79,7 +85,7 @@ public class Hand {
 	
 	//sorts hand by suit (smallest to largest)
 	public void sortBySuit() {
-		int handSize = count;
+		int handSize = size;
 		int i = 0;
 		int a = 0;
 		int smallSuitIndex = 0;
@@ -121,11 +127,18 @@ public class Hand {
 	//prints the cards in hand
 	public void printHand() {
 		
-	}
+		for(int i = 0; i<Hand.length; i++){
+			   if (Hand[i] != null){
+				   System.out.println(Hand[i]);
+			   }
+		   }
+		   System.out.println();
+	   }
+	
 	
 	//gets the number of cards
 	public int cardCount() {
-		return count;
+		return size;
 	}
 	
 	/**
@@ -170,7 +183,7 @@ public class Hand {
 	public boolean hasTriplet() {
 		this.sortByValue();
 		int i = 0;
-		int size = count;
+		int size = this.size;
 		int tripCount = 0;
 		
 		while(i != 3) {
@@ -197,7 +210,7 @@ public class Hand {
 	//True if there is a Flush (all the same suit)
 	public boolean hasFlush() {
 		this.sortBySuit();
-		int size = count;
+		int size = this.size;
 		int i = 0;
 		
 		while(i != size) {
@@ -216,7 +229,7 @@ public class Hand {
 		int i = 1;
 		int j = 0;
 		
-		while(i != count) {
+		while(i != size) {
 			if((this.Hand[i].getValue()-this.Hand[j].getValue()) != 1) {
 				return false;
 			}
@@ -282,7 +295,7 @@ public class Hand {
 		int opponent = 0;
 		
 		boolean draw = true;
-		for(int i = 0; i < count; i++) {
+		for(int i = 0; i < size; i++) {
 			if(this.Hand[i] != oppHand.Hand[i]) {
 				draw = false;
 			}
