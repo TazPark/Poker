@@ -332,16 +332,282 @@ public class Hand {
 			player = 0;
 		}
 		
-
+		//If opponent has either a Royal && Straight Flush
+		if(oppHand.hasFlush() == true && oppHand.hasStraight() == true) {
+			if(oppHand.Hand[2].getValue() == 12) {
+				opponent = 10;
+			}else {
+				opponent = 9;	
+			}
+		}
+		//If opponent has FourOfAKind
+		else if(oppHand.hasFourOfAKind() == true) {
+			opponent = 8;
+		}
+		//If opponent has Full House
+		else if(oppHand.hasFullHouse() == true) {
+			opponent = 7;
+		}
+		//If opponent has Flush
+		else if(oppHand.hasFlush() == true) {
+			opponent = 6;
+		}
+		//If opponent has Straight
+		else if(oppHand.hasStraight() == true) {
+			opponent = 5;
+		}
+		//If opponent has ThreeOfAKind
+		else if(oppHand.hasTriplet() == true) {
+			opponent = 4;
+		}
+		//If opponent has 2 pair
+		else if(oppHand.numPairs() == 2) {
+			opponent = 3;
+		}
+		//If opponent has 1 pair
+		else if(oppHand.numPairs() == 1) {
+			opponent = 2;
+		}
+		//if opponent has nothing
+		else {
+			opponent = 0;
+		}
 		
+		switch (player){
+			
+			//When Player has Royal Flush versus opponents hand
+			case 10:
+				switch(opponent) {
+					case 10:
+					case 9:	
+						return 99;
+					case 8: 
+						return 99;
+					case 7: 
+						return 99;
+					case 6: 
+						return 99;
+					case 5: 
+						return 99;
+					case 4:
+						return 99;
+					case 3:
+						return 99;
+					case 2:
+						return 99;
+					case 0:
+						return 99;
+				}
+			//When Player has a Straight Flush
+			case 9:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:
+				case 8: 
+					return 99;
+				case 7: 
+					return 99;
+				case 6: 
+					return 99;
+				case 5: 
+					return 99;
+				case 4:
+					return 99;
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has a Four of a Kind
+			case 8:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+				case 7: 
+					return 99;
+				case 6: 
+					return 99;
+				case 5: 
+					return 99;
+				case 4:
+					return 99;
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has a Full House
+			case 7:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+				case 6: 
+					return 99;
+				case 5: 
+					return 99;
+				case 4:
+					return 99;
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has a Flush
+			case 6:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+				case 5: 
+					return 99;
+				case 4:
+					return 99;
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has a Straight
+			case 5:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+					return -99;
+				case 5: 
+				case 4:
+					return 99;
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has a Three of a Kind
+			case 4:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+					return -99;
+				case 5: 
+					return -99;
+				case 4:
+				case 3:
+					return 99;
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has 2 Pairs
+			case 3:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+					return -99;
+				case 5: 
+					return -99;
+				case 4:
+					return -99;
+				case 3:
+				case 2:
+					return 99;
+				case 0:
+					return 99;
+			}
+			//When Player has 1 Pair
+			case 2:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+					return -99;
+				case 5: 
+					return -99;
+				case 4:
+					return -99;
+				case 3:
+					return -99;
+				case 2:
+				case 0:
+					return 99;
+			}
+			//When Player has nothing
+			case 0:
+				switch(opponent) {
+				case 10:
+					return -99;
+				case 9:	
+					return -99;
+				case 8:
+					return -99;
+				case 7: 
+					return -99;
+				case 6: 
+					return -99;
+				case 5: 
+					return -99;
+				case 4:
+					return -99;
+				case 3:
+					return -99;
+				case 2:
+					return -99;
+				case 0:
+			}
+		}
 		
-		
-		
-		
-		
-		
-		
-		
+		return 66;
 		
 		
 		
