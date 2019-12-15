@@ -11,7 +11,7 @@ public class Poker {
 		System.out.println("Hello, Welcome to Poker!");
 		System.out.println("What is your name?");
 		Player player1 =  new Player(keyboard.nextLine(), 150);
-		
+		Player computer = new Player("Bot Negreanu", 150);
 		
 		
 	}
