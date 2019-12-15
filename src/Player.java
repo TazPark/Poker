@@ -66,36 +66,64 @@ public class Player {
 		
 		//For Computer
 		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
-			numCardsDiscard = 0;
+			// numCardsDiscard = 0;
 		}
 		else if(playerHand.hasFourOfAKind() == true) {
-			numCardsDiscard = 1;
+			// numCardsDiscard = 1;
 			this.playerHand.sortByValue();
-			if(this.playerHand) {
-				
+			if(this.playerHand.getCardValueAt(0) == this.playerHand.getCardValueAt(2)) {
+				tempCard = new Card(this.playerHand.getCardValueAt(4), this.playerHand.getCardValueAt(4));
+				this.playerHand.removeCard(tempCard);
+			} else {
+				tempCard = new Card(this.playerHand.getCardValueAt(0), this.playerHand.getCardValueAt(0));
+				this.playerHand.removeCard(tempCard);
 			}
 		}
 		else if(playerHand.hasFullHouse() == true) {
-			numCardsDiscard = 2;
+			// numCardsDiscard = 2;
+			tempCard = new Card(this.playerHand.getCardValueAt(0), this.playerHand.getCardValueAt(0));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(4), this.playerHand.getCardValueAt(4));
+			this.playerHand.removeCard(tempCard);
 		}
 		else if(playerHand.hasFlush() == true) {
-			numCardsDiscard = 5;
+			//numCardsDiscard = 5;
+			this.playerHand.clear();
 		}
 		else if(playerHand.hasStraight() == true) {
-			numCardsDiscard = 5;
+			//numCardsDiscard = 5;
+			this.playerHand.clear();
 		}
 		else if(playerHand.hasTriplet() == true) {
-			numCardsDiscard = 2;
+			//numCardsDiscard = 2;
+			tempCard = new Card(this.playerHand.getCardValueAt(0), this.playerHand.getCardValueAt(0));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(1), this.playerHand.getCardValueAt(1));
+			this.playerHand.removeCard(tempCard);
 		}
 		else if(playerHand.numPairs() == 2) {
-			numCardsDiscard = 3;
+			//numCardsDiscard = 3;
+			tempCard = new Card(this.playerHand.getCardValueAt(0), this.playerHand.getCardValueAt(0));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(2), this.playerHand.getCardValueAt(2));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(4), this.playerHand.getCardValueAt(4));
+			this.playerHand.removeCard(tempCard);
 		}
 		else if(playerHand.numPairs() == 1) {
-			numCardsDiscard = 3;
+			//numCardsDiscard = 3;
+			tempCard = new Card(this.playerHand.getCardValueAt(0), this.playerHand.getCardValueAt(0));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(2), this.playerHand.getCardValueAt(2));
+			this.playerHand.removeCard(tempCard);
+			tempCard = new Card(this.playerHand.getCardValueAt(4), this.playerHand.getCardValueAt(4));
+			this.playerHand.removeCard(tempCard);
 		}
 		else{
-			numCardsDiscard = 5;
+			//numCardsDiscard = 5;
+			this.playerHand.clear();
 		}
+		return;
 	}
 	
 	public float wager(float min) {
