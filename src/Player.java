@@ -30,6 +30,7 @@ public class Player {
 		if(!this.name.equalsIgnoreCase("Bot Negreanu")) {
 			wage = keyboard.nextFloat();
 			if(wage >= min) {
+				blanace -= wage;
 				return wage;
 			} else if (wage < min){
 				do {
@@ -37,19 +38,106 @@ public class Player {
 					System.out.println("Please enter a valid wage: ");
 					wage = keyboard.nextFloat();
 				}while(wage < min);
-				
+				blanace -= wage;
 				return wage;
 			}
 		}
 		
+		//for computer
+		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
+			wage = this.blanace;
+			this.blanace = this.blanace - this.blanace;
+			return wage;
+		}
+		if(playerHand.hasFourOfAKind() == true) {
+			if((this.blanace*.7) >= min) {
+				wage = this.blanace * .7f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.hasFullHouse() == true) {
+			if((this.blanace*.6) >= min) {
+				this.blanace = this.blanace * .6f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.hasFlush() == true) {
+			if((this.blanace*.5) >= min) {
+				wage = this.blanace * .5f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.hasStraight() == true) {
+			if((this.blanace) >= min) {
+				wage = this.blanace * .4f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.hasTriplet() == true) {
+			if((this.blanace*.3) >= min) {
+				wage = this.blanace * .3f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.numPairs() == 2) {
+			if((this.blanace*.2) >= min) {
+				wage = this.blanace * .2f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		if(playerHand.numPairs() == 1) {
+			if((this.blanace*.1) >= min) {
+				wage = this.blanace * .1f;
+				this.blanace -= wage;
+				return wage;
+			}
+			else {
+				this.blanace -= min;
+				return min;
+			}
+		}
+		return -1;
 	}
 	
-	public String showHand() {
-		return playerHand.printHand;
+	public void showHand() {
+		playerHand.printHand();
 	}
 	
 	public float getBalance() {
 		return this.blanace;
 	}
-
+	
+	public void winnings(float amount){
+		this.blanace += amount;
+	}
 }
