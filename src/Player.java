@@ -35,7 +35,8 @@ public class Player {
 				System.out.println("You have chose to not discard any cards.");
 			} else if(numCardsDiscard <= 5 && numCardsDiscard > 0) {
 				do {
-					this.showHand();
+					System.out.println("\n" + "Your hand:");
+					System.out.println(this.showHand().printHand());
 					System.out.println("What card would you like to discard?");
 					System.out.println("Type the suit and then the value.");
 					System.out.println("Type the number for the suit: ");
