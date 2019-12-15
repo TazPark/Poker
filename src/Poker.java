@@ -37,9 +37,20 @@ public class Poker {
 			dealHand(deck, player1);
 			dealHand(deck, player2);
 			
-			wager(player1, 0);
-			System.out.println(playerWager);
-			wager(player2, playerWager);
+			System.out.println("****************************************" + "");
+			System.out.println(player1.getName() + "'s turn");
+			System.out.println("****************************************" + "");
+			playerWager = wager(player1, 0);
+			System.out.println("\n");
+			System.out.println("****************************************" + "");
+			System.out.println(player2.getName() + "'s turn");
+			System.out.println("****************************************" + "");
+			compWager = wager(player2, playerWager);
+			System.out.println("\n");
+			
+			discardAndDeal(deck, player1);
+			System.out.println("\n");
+			discardAndDeal(deck, player2);
 			
 			winner = player1.showHand().compareTo(player2.showHand());
 			if(winner == 99) {
@@ -55,11 +66,15 @@ public class Poker {
 				player2.winnings(compWager);	
 			}
 			
+			displayBalance(player1);
+			displayBalance(player2);
+			
+			player1.showHand().clear();
+			player2.showHand().clear();
+			
 			System.out.println("\n" + "Would you like to keep playing? Type: 'y' or 'n'" + "\n");
-			System.out.println(keyboard.hasNextLine());
-			keepPlaying = keyboard.next(System.in);
+			keepPlaying = keyboard.next();
 		}while(keepPlaying.equalsIgnoreCase("y"));
-		keyboard.close();
 	}
 	
 	// Displays the players balances
@@ -128,7 +143,16 @@ public class Poker {
 	public static void discardAndDeal(Card[] deck, Player p1){
 		p1.discard();
 		for(int i = 0; i < p1.showHand().handSize(); i++){
-			p1.deal(nextCard(deck));	
+			Card tempCard = new Card(-1,-1);
+			p1.showHand().removeCard(tempCard, nextCard(deck));
+			
+			//p1.deal(nextCard(deck));	
+		}
+		if(!p1.getName().equalsIgnoreCase("Bot Negreanu")) {
+			System.out.println("****************************************" + "");
+			System.out.println(p1.getName() + "'s New Cards: ");
+			System.out.println(p1.showHand().printHand()+ "");
+			System.out.println("****************************************" + "");
 		}
 	}
 	
@@ -139,9 +163,11 @@ public class Poker {
 	
 	//Shows hand and asks how much to wage
 	public static double wager(Player player, double minimum){
+		if(!player.getName().equalsIgnoreCase("Bot Negreanu")) {
 		System.out.println(player.getName() +"'s Cards: ");
 		player.showHand().sortByValue();
-		System.out.println(player.showHand().printHand());
+			System.out.println(player.showHand().printHand());
+		}
 		return player.wager(minimum);
 	}
 }
