@@ -199,7 +199,6 @@ public class Hand {
 	}
 	
 	//True if there is a pair (two cards have the same value)
-	/** Fix This */
 	public boolean hasPairs() {
 		int numpairs = 0;
 		this.sortByValue();
@@ -307,7 +306,6 @@ public class Hand {
 	}
 	
 	//Suit of the highest valued card
-	/** Fix This */
 	public Card highestDuplicate() {
 		this.sortByValue();
 		if(Hand[0].getValue() == 1) {

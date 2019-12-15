@@ -10,6 +10,10 @@ public class Player {
 		this.blanace = balance;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public void deal() {
 		
 	}
