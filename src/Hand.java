@@ -16,6 +16,14 @@ public class Hand {
 		size = 0;
 	}
 	
+	public int getCardValueAt(int index) {
+		return this.playerHand.get(index).getValue();
+	}
+	
+	public int getCardSuitAt(int index) {
+		return this.playerHand.get(index).getSuit();
+	}
+	
 	//adds a new card to hand
 	public void addCard(Card c) {
 		playerHand.add(c);
