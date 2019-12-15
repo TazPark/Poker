@@ -12,19 +12,17 @@ public class Hand {
 	
 	//clears the hand of all cards
 	public void clear() {
-		for(int i = 0 ; i< Hand.length; i++){
-			
-			Hand[i] = null; 
-			
+		for(int j = 0 ; j< Hand.length; j++){
+			Hand[j] = null; 
 		}
 		  size = 0;
 	}
 	
 	//adds a new card to hand
 	public void addCard(Card c) {
-		for(int i=0 ; i< this.Hand.length; i++){ 
-			if (Hand[i] == null){
-				this.Hand[i] = c;
+		for(int j=0 ; j< this.Hand.length; j++){ 
+			if (Hand[j] == null){
+				this.Hand[j] = c;
 				size = size + 1;
 				break;
 			}
@@ -33,9 +31,9 @@ public class Hand {
 	
 	//removes card from hand
 	public void removeCard(Card c) {
-		for(int i=0 ; i<this.Hand.length; i++){ 
-			if (this.Hand[i].equals(c)){
-				this.Hand[i] = null;
+		for(int j=0 ; j<this.Hand.length; j++){ 
+			if (this.Hand[j].equals(c)){
+				this.Hand[j] = null;
 				size = size-1;
 			}
 		}
@@ -147,27 +145,57 @@ public class Hand {
 	 */
 	
 	//checks to see the number of pairs (# of cards where they are the same)
-	/** Fix This */
 	public int numPairs() {
-		int numpairs = 0;
+		int num = 0;
 		this.sortByValue();
 
-		for(int i=0;i<Hand.length-1;i++) {
-			if(Hand[i].getValue()==Hand[i+1].getValue()) {
-				i++;
-				numpairs++;
+		for(int j=0;j<Hand.length-1;j++) {
+			if(Hand[j].getValue()==Hand[j+1].getValue()) {
+				j++;
+				num++;
 			}
 		}
-		return numpairs;
+		return num;
 	}
 	
-	public int highestPair() {
-		int highestPairNum = 0;
+	//Returns the highest pair number (whether its 1 or 2 pairs)
+	public int onePairNum() {
+		int onePairnum = -99;
+		int twoPairnum = -98;
+		Card tempCard = new Card();
 		this.sortByValue();
 		
-		
-		
-		return highestPairNum;
+		if(this.numPairs() == 1) {
+			for(int i = 0; i < size; i++) {
+				tempCard = this.Hand[i];
+				if(tempCard == null) {
+					continue;
+				}
+				else if(tempCard.getValue() == Hand[i+1].getValue()){
+					onePairnum = Hand[i+1].getValue();
+					return onePairnum;
+				}
+			}
+		}
+		else if (this.numPairs() == 2) {
+			for(int i = 0; i < size; i++) {
+				tempCard = this.Hand[i];
+				if(tempCard == null) {
+					continue;
+				}
+				else if(tempCard.getValue() == Hand[i+1].getValue()){
+					if(onePairnum == -99) {
+						onePairnum = Hand[i+1].getValue();
+						i++;
+					}
+					else {
+						twoPairnum = Hand[i+1].getValue();
+						return twoPairnum;
+					}
+				}
+			}
+		}
+		return onePairnum;
 	}
 	
 	//True if there is a pair (two cards have the same value)
@@ -637,6 +665,23 @@ public class Hand {
 				case 4:
 					return -99;
 				case 3:
+					if(this.onePairNum() > oppHand.onePairNum()) {
+						return 99;
+					}
+					else if(this.onePairNum() < oppHand.onePairNum()){
+						return -99;
+					}
+					else {
+						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+							return 99;
+						}
+						else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+							return -99;
+						}
+						else {
+							return 66;
+						}
+					}
 				case 2:
 					return 99;
 				case 0:
@@ -662,6 +707,23 @@ public class Hand {
 				case 3:
 					return -99;
 				case 2:
+					if(this.onePairNum() > oppHand.onePairNum()) {
+						return 99;
+					}
+					else if(this.onePairNum() < oppHand.onePairNum()){
+						return -99;
+					}
+					else {
+						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+							return 99;
+						}
+						else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+							return -99;
+						}
+						else {
+							return 66;
+						}
+					}
 				case 0:
 					return 99;
 			}
