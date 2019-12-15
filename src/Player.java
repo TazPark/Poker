@@ -267,8 +267,8 @@ public class Player {
 		return -1;
 	}
 	
-	public void showHand() {
-		playerHand.printHand();
+	public Hand showHand() {
+		return playerHand;
 	}
 	
 	public float getBalance() {
