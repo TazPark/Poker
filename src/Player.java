@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Player {
 	
 	private Hand playerHand;
@@ -14,15 +16,20 @@ public class Player {
 		return this.name;
 	}
 	
-	public void deal() {
-		
-	}
-	
 	public void discard() {
 		
 	}
 	
-	public int wager() {
+	public float wager(float min) {
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("Minimum wage: " + min);
+		System.out.println("What is your wager? ");
+		
+		float wage = min;
+		
+		if(!this.name.equalsIgnoreCase("Bot Negreanu")) {
+			wage = keyboard.nextFloat();
+		}
 		
 	}
 	
