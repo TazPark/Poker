@@ -16,9 +16,9 @@ public class Player {
 		return this.name;
 	}
 	
-	public void discard() {
+	/**public void discard() {
 		
-	}
+	}*/
 	
 	public float wager(float min) {
 		Scanner keyboard = new Scanner(System.in);
@@ -32,7 +32,7 @@ public class Player {
 			if(wage >= min) {
 				blanace -= wage;
 				return wage;
-			} else if (wage < min){
+			} else if (wage < min && this.blanace >= min){
 				do {
 					System.out.println("Wage cannot be lower than the min.");
 					System.out.println("Please enter a valid wage: ");
@@ -40,6 +40,18 @@ public class Player {
 				}while(wage < min);
 				blanace -= wage;
 				return wage;
+			} else if (wage < min && this.blanace < min) {
+				System.out.println("Since you cannot wage the minimum, you will have to go all in");
+				System.out.println("To go all in, type your full balance (Your balance: " + this.getBalance() +")");
+				wage = keyboard.nextFloat();
+				if(wage < min) {
+					do{
+						System.out.println("Invalid wage.");
+						System.out.println("Input the correct wage: " + this.getBalance());
+						wage = keyboard.nextFloat();
+					}while(wage != blanace);
+					return wage;
+				}
 			}
 		}
 		
