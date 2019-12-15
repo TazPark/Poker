@@ -3,10 +3,10 @@ import java.util.*;
 public class Player {
 	
 	private Hand playerHand;
-	private float balance;
+	private double balance;
 	private String name;
 	
-	public Player(String inputName, float balance) {
+	public Player(String inputName, double balance) {
 		this.playerHand = new Hand();
 		this.name = inputName;
 		this.balance = balance;
@@ -16,17 +16,21 @@ public class Player {
 		return this.name;
 	}
 	
+	public void deal(Card card){
+		playerHand.addCard(card);
+	}
+	
 	public void discard() {
 		
-		Scanner keyboard = new Scanner(System.in);
+		Scanner kb = new Scanner(System.in);
 		int numCardsDiscard = 0;
 		System.out.println("How many cards would you like to discard?");
-		numCardsDiscard = keyboard.nextInt();
 		Card tempCard = new Card();
 		String suit = "";
 		int suitNum = 0;
 		
 		if(!this.getName().equalsIgnoreCase("Bot Negreanu")) {
+			numCardsDiscard = kb.nextInt();
 			if(numCardsDiscard == 0) {
 				System.out.println("You have chose to not discard any cards.");
 			} else if(numCardsDiscard <= 5 && numCardsDiscard > 0) {
@@ -34,27 +38,29 @@ public class Player {
 					this.showHand();
 					System.out.println("What card would you like to discard?");
 					System.out.println("Type the suit and then the value.");
-					System.out.println("(e.g. for 2 of Clubs. Type Clubs, then 2.");
-					suit = keyboard.next();
+					System.out.println("Type the number for the suit: ");
+					System.out.println("0 for clubs");
+					System.out.println("1 for diamonds");
+					System.out.println("2 for hearts");
+					System.out.println("3 for spades");
+					suitNum = kb.nextInt();
+					System.out.println("\n");
 					
-					if(!suit.equalsIgnoreCase("clubs") || !suit.equalsIgnoreCase("diamonds") || !suit.equalsIgnoreCase("hearts") || !suit.equalsIgnoreCase("spades")) {
+					if(!(suitNum >= 0 || suitNum <= 3)) {
 						do {
 							System.out.println("Invalid suit, please enter a valid suit: ");
-							suit = keyboard.next();
-						}while(!suit.equalsIgnoreCase("clubs") || !suit.equalsIgnoreCase("diamonds") || !suit.equalsIgnoreCase("hearts") || !suit.equalsIgnoreCase("spades"));
+							suitNum = kb.nextInt();
+						}while(!(suitNum >= 0 || suitNum <= 3));
 					}
+					System.out.println("What is the value of the card?");
+					System.out.println("Type the number for the value: ");
+					System.out.println("1 for Ace");
+					System.out.println("11 for Jack");
+					System.out.println("12 for Queen");
+					System.out.println("13 for King");
+					tempCard = new Card(suitNum,kb.nextInt());
+					System.out.println("\n");
 					
-					if(suit.equalsIgnoreCase("clubs")) {
-						suitNum = 0;
-					} else if(suit.equalsIgnoreCase("diamonds")) {
-						suitNum = 1;
-					} else if(suit.equalsIgnoreCase("hearts")) {
-						suitNum = 2;
-					} else if(suit.equalsIgnoreCase("spades")) {
-						suitNum = 3;
-					}
-					
-					tempCard = new Card(keyboard.nextInt(), suitNum);
 					this.playerHand.removeCard(tempCard);
 					numCardsDiscard--;
 				}while(numCardsDiscard != 0);
@@ -126,39 +132,37 @@ public class Player {
 		return;
 	}
 	
-	public float wager(float min) {
-		Scanner keyboard = new Scanner(System.in);
+	public double wager(double min) {
+		Scanner kb = new Scanner(System.in);
+		
 		System.out.println("Minimum wage: " + min);
 		System.out.println("What is your wager? ");
 		
-		float wage = min;
+		double wage = min;
 		
 		if(!this.name.equalsIgnoreCase("Bot Negreanu")) {
-			wage = keyboard.nextFloat();
+			wage = kb.nextDouble();
 			if(wage >= min) {
 				balance -= wage;
-				keyboard.close();
 				return wage;
 			} else if (wage < min && this.balance >= min){
 				do {
 					System.out.println("Wage cannot be lower than the min.");
 					System.out.println("Please enter a valid wage: ");
-					wage = keyboard.nextFloat();
+					wage = kb.nextDouble();
 				}while(wage < min);
 				balance -= wage;
-				keyboard.close();
 				return wage;
 			} else if (wage < min && this.balance < min) {
 				System.out.println("Since you cannot wage the minimum, you will have to go all in");
 				System.out.println("To go all in, type your full balance (Your balance: " + this.getBalance() +")");
-				wage = keyboard.nextFloat();
+				wage = kb.nextDouble();
 				if(wage < min) {
 					do{
 						System.out.println("Invalid wage.");
 						System.out.println("Input the correct wage: " + this.getBalance());
-						wage = keyboard.nextFloat();
+						wage = kb.nextDouble();
 					}while(wage != balance);
-					keyboard.close();
 					return wage;
 				}
 			}
@@ -169,19 +173,19 @@ public class Player {
 		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
 			wage = this.balance;
 			this.balance = this.balance - this.balance;
-			keyboard.close();
+			System.out.println("Negreanu has chose to wage: " + wage);
 			return wage;
 		}
 		if(playerHand.hasFourOfAKind() == true) {
 			if((this.balance*.7) >= min) {
 				wage = this.balance * .7f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -189,12 +193,12 @@ public class Player {
 			if((this.balance*.6) >= min) {
 				this.balance = this.balance * .6f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -202,12 +206,12 @@ public class Player {
 			if((this.balance*.5) >= min) {
 				wage = this.balance * .5f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -215,12 +219,12 @@ public class Player {
 			if((this.balance) >= min) {
 				wage = this.balance * .4f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -228,12 +232,12 @@ public class Player {
 			if((this.balance*.3) >= min) {
 				wage = this.balance * .3f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -241,12 +245,12 @@ public class Player {
 			if((this.balance*.2) >= min) {
 				wage = this.balance * .2f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
@@ -254,16 +258,16 @@ public class Player {
 			if((this.balance*.1) >= min) {
 				wage = this.balance * .1f;
 				this.balance -= wage;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return wage;
 			}
 			else {
 				this.balance -= min;
-				keyboard.close();
+				System.out.println("Negreanu has chose to wage: " + String.format("%.2f", wage));
 				return min;
 			}
 		}
-		keyboard.close();
+		kb.close();
 		return -1;
 	}
 	
@@ -271,11 +275,11 @@ public class Player {
 		return playerHand;
 	}
 	
-	public float getBalance() {
+	public double getBalance() {
 		return this.balance;
 	}
 	
-	public void winnings(float amount){
+	public void winnings(double amount){
 		this.balance += amount;
 	}
 }
