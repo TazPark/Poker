@@ -37,8 +37,8 @@ public class Player {
 		return playerHand.printHand;
 	}
 	
-	public int getBalance() {
-		return balance;
+	public float getBalance() {
+		return this.blanace;
 	}
 
 }

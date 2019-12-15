@@ -61,6 +61,13 @@ public class Card {
 		}
 	}
 	
+	public boolean equals(Card c) {
+		if(this.suit == c.suit && this.value == c.value)
+			return true;
+		else
+			return false;
+	}
+	
 	public String toString() {
 		return this.valueToString() + " of " + this.suitToString();
 	}
