@@ -37,20 +37,25 @@ public class Poker {
 			dealHand(deck, player1);
 			dealHand(deck, player2);
 			
-			System.out.println("****************************************" + "");
+			System.out.println("========================================" + "");
 			System.out.println(player1.getName() + "'s turn");
-			System.out.println("****************************************" + "");
+			System.out.println("========================================" + "");
 			playerWager = wager(player1, 0);
 			System.out.println("\n");
-			System.out.println("****************************************" + "");
+			System.out.println("========================================" + "");
 			System.out.println(player2.getName() + "'s turn");
-			System.out.println("****************************************" + "");
+			System.out.println("========================================" + "");
 			compWager = wager(player2, playerWager);
 			System.out.println("\n");
 			
 			discardAndDeal(deck, player1);
 			System.out.println("\n");
 			discardAndDeal(deck, player2);
+			System.out.println("\n");
+			
+			System.out.println(player2.getName() +"'s Cards: ");
+			player2.showHand().sortByValue();
+			System.out.println(player2.showHand().printHand());
 			
 			winner = player1.showHand().compareTo(player2.showHand());
 			if(winner == 99) {
