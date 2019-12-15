@@ -2,39 +2,32 @@ import java.util.ArrayList;
 
 public class Hand {
 	
-	private Card[] Hand;
+	private ArrayList<Card> playerHand;
 	private int size;
 	
-	Hand(){
-		Hand = new Card[5];
+	public Hand(){
+		playerHand = new ArrayList<Card>();
 		size = 0;
 	}
 	
 	//clears the hand of all cards
 	public void clear() {
-		for(int j = 0 ; j< Hand.length; j++){
-			Hand[j] = null; 
-		}
-		  size = 0;
+		playerHand.clear();
+		size = 0;
 	}
 	
 	//adds a new card to hand
 	public void addCard(Card c) {
-		for(int j=0 ; j< this.Hand.length; j++){ 
-			if (Hand[j] == null){
-				this.Hand[j] = c;
-				size = size + 1;
-				break;
-			}
-		 }
+		playerHand.add(c);
+		size ++;
 	}
 	
 	//removes card from hand
 	public void removeCard(Card c) {
-		for(int j=0 ; j<this.Hand.length; j++){ 
-			if (this.Hand[j].equals(c)){
-				this.Hand[j] = null;
-				size = size-1;
+		for(int i=0 ; i< playerHand.size(); i++){ 
+			if (playerHand.get(i).equals(c)){
+				playerHand.remove(i);
+				size--;
 			}
 		}
 	}
@@ -50,29 +43,29 @@ public class Hand {
 		Card[] tempHand = new Card[5];
 		
 		while(handSize > 0) {
-			while(Hand[i] != null) {
+			while(playerHand.get(i) != null) {
 				i++;
 				continue;
 			}
-			tempCard = Hand[i];
+			tempCard = playerHand.get(i);
 			for(int j = 0; j < handSize; j++) {
-				if(this.Hand[j] == null) {
+				if(this.playerHand.get(j) == null) {
 					continue;
 				}
-				if(tempCard.getValue() > Hand[j].getValue()) {
+				if(tempCard.getValue() > playerHand.get(j).getValue()) {
 					smallNumIndex = j;
-					tempCard = Hand[j];
-				}else if(tempCard.getValue() == Hand[j].getValue()){
-					if(tempCard.getSuit() > Hand[j].getSuit()) {
+					tempCard = playerHand.get(j);
+				}else if(tempCard.getValue() == playerHand.get(j).getValue()){
+					if(tempCard.getSuit() > playerHand.get(j).getSuit()) {
 						smallNumIndex = j;
-						tempCard = Hand[j];
+						tempCard = playerHand.get(j);
 					}
 					continue;
 				}else {
 					continue;
 				}
 			} 
-			tempCard = Hand[smallNumIndex];
+			tempCard = playerHand.get(smallNumIndex);
 			tempHand[a] = tempCard;
 			a++;
 			this.removeCard(tempCard);
@@ -91,29 +84,29 @@ public class Hand {
 		Card[] tempHand = new Card[5];
 		
 		while(handSize > 0) {
-			while(Hand[i] != null) {
+			while(playerHand.get(i) != null) {
 				i++;
 				continue;
 			}
-			tempCard = Hand[i];
+			tempCard = playerHand.get(i);
 			for(int j = 0; j < handSize; j++) {
-				if(this.Hand[j] == null) {
+				if(this.playerHand.get(j) == null) {
 					continue;
 				}
-				if(tempCard.getSuit() > Hand[j].getSuit()) {
+				if(tempCard.getSuit() > playerHand.get(j).getSuit()) {
 					smallSuitIndex = j;
-					tempCard = Hand[j];
-				}else if(tempCard.getSuit() == Hand[j].getSuit()){
-					if(tempCard.getValue() > Hand[j].getValue()) {
+					tempCard = playerHand.get(j);
+				}else if(tempCard.getSuit() == playerHand.get(j).getSuit()){
+					if(tempCard.getValue() > playerHand.get(j).getValue()) {
 						smallSuitIndex = j;
-						tempCard = Hand[j];
+						tempCard = playerHand.get(j);
 					}
 					continue;
 				}else {
 					continue;
 				}
 			} 
-			tempCard = Hand[smallSuitIndex];
+			tempCard = playerHand.get(smallSuitIndex);
 			tempHand[a] = tempCard;
 			a++;
 			this.removeCard(tempCard);
@@ -123,19 +116,16 @@ public class Hand {
 	}
 	
 	//prints the cards in hand
-	public void printHand() {
-		
-		for(int i = 0; i<Hand.length; i++){
-			   if (Hand[i] != null){
-				   System.out.println(Hand[i]);
-			   }
-		   }
-		   System.out.println();
-	   }
-	
+	public String printHand() {
+		String temp = "";
+		for(Card c : this.playerHand) {
+			temp += c.toString() + "\n";
+		}
+		return temp;
+	}
 	
 	//gets the number of cards
-	public int cardCount() {
+	public int handSize() {
 		return size;
 	}
 	
@@ -146,16 +136,15 @@ public class Hand {
 	
 	//checks to see the number of pairs (# of cards where they are the same)
 	public int numPairs() {
-		int num = 0;
+		int numpairs = 0;
 		this.sortByValue();
 
-		for(int j=0;j<Hand.length-1;j++) {
-			if(Hand[j].getValue()==Hand[j+1].getValue()) {
-				j++;
-				num++;
-			}
-		}
-		return num;
+		for(int i=0;i<playerHand.size()-2;i++)
+			for(int j = 1; j < playerHand.size()-1; j++)
+				if(playerHand.get(i).equals(playerHand.get(j)))
+					numpairs++;
+		
+		return numpairs;
 	}
 	
 	//Returns the highest pair number (whether its 1 or 2 pairs)
@@ -167,29 +156,29 @@ public class Hand {
 		
 		if(this.numPairs() == 1) {
 			for(int i = 0; i < size; i++) {
-				tempCard = this.Hand[i];
+				tempCard = this.playerHand.get(i);
 				if(tempCard == null) {
 					continue;
 				}
-				else if(tempCard.getValue() == Hand[i+1].getValue()){
-					onePairnum = Hand[i+1].getValue();
+				else if(tempCard.getValue() == playerHand.get(i+1).getValue()){
+					onePairnum = playerHand.get(i+1).getValue();
 					return onePairnum;
 				}
 			}
 		}
 		else if (this.numPairs() == 2) {
 			for(int i = 0; i < size; i++) {
-				tempCard = this.Hand[i];
+				tempCard = this.playerHand.get(i+1);
 				if(tempCard == null) {
 					continue;
 				}
-				else if(tempCard.getValue() == Hand[i+1].getValue()){
+				else if(tempCard.getValue() == playerHand.get(i+1).getValue()){
 					if(onePairnum == -99) {
-						onePairnum = Hand[i+1].getValue();
+						onePairnum = playerHand.get(i+1).getValue();
 						i++;
 					}
 					else {
-						twoPairnum = Hand[i+1].getValue();
+						twoPairnum = playerHand.get(i+1).getValue();
 						return twoPairnum;
 					}
 				}
@@ -203,12 +192,11 @@ public class Hand {
 		int numpairs = 0;
 		this.sortByValue();
 
-		for(int i=0;i<Hand.length-1;i++) {
-			if(Hand[i].getValue()==Hand[i+1].getValue()) {
-				i++;
-				numpairs++;
-			}
-		}
+		for(int i=0;i<playerHand.size()-2;i++)
+			for(int j = 1; j < playerHand.size()-1; j++)
+				if(playerHand.get(i).equals(playerHand.get(j)))
+					numpairs++;
+		
 		if(numpairs > 0) {
 			return true;
 		}
@@ -219,15 +207,15 @@ public class Hand {
 	public boolean hasTriplet() {
 		this.sortByValue();
 		int i = 0;
-		int size = this.size;
+		int handSize = size;
 		int tripCount = 0;
 		
 		while(i != 3) {
 			
-			for (int j = 0; j < size; j++) {
-				if(Hand[i].getValue() == Hand[j].getValue() && Hand[i].getSuit() == Hand[j].getSuit()) {
+			for (int j = 0; j < handSize; j++) {
+				if(playerHand.get(i).getValue() == playerHand.get(j).getValue() && playerHand.get(i).getSuit() == playerHand.get(j).getSuit()) {
 					continue;
-				}else if(Hand[i].getValue() == Hand[j].getValue() && Hand[i].getSuit() != Hand[j].getSuit()) {
+				}else if(playerHand.get(i).getValue() == playerHand.get(j).getValue() && playerHand.get(i).getSuit() != playerHand.get(j).getSuit()) {
 					tripCount++;
 				}else {
 					continue;
@@ -246,11 +234,11 @@ public class Hand {
 	//True if there is a Flush (all the same suit)
 	public boolean hasFlush() {
 		this.sortBySuit();
-		int size = this.size;
+		int handSize = size;
 		int i = 0;
 		
-		while(i != size) {
-			if(this.Hand[size-1].getSuit() != this.Hand[i].getSuit()) {
+		while(i != handSize) {
+			if(this.playerHand.get(handSize-1).getSuit() != this.playerHand.get(i).getSuit()) {
 				return false;
 			}
 			i++;
@@ -266,7 +254,7 @@ public class Hand {
 		int j = 0;
 		
 		while(i != size) {
-			if((this.Hand[i].getValue()-this.Hand[j].getValue()) != 1) {
+			if((this.playerHand.get(i).getValue()-this.playerHand.get(j).getValue()) != 1) {
 				return false;
 			}
 			i++;
@@ -288,11 +276,11 @@ public class Hand {
 	public boolean hasFourOfAKind() {
 		this.sortByValue();
 		
-		if(Hand[0].getValue() == Hand[1].getValue() && 
-				Hand[0].getValue() == Hand[2].getValue() && Hand[0].getValue() == Hand[3].getValue()) {
+		if(playerHand.get(0).getValue() == playerHand.get(1).getValue() && 
+				playerHand.get(0).getValue() == playerHand.get(2).getValue() && playerHand.get(0).getValue() == playerHand.get(3).getValue()) {
 			return true;
-		} else if(Hand[4].getValue() == Hand[1].getValue() && 
-				Hand[4].getValue() == Hand[2].getValue() && Hand[4].getValue() == Hand[3].getValue()) {
+		} else if(playerHand.get(4).getValue() == playerHand.get(1).getValue() && 
+				playerHand.get(4).getValue() == playerHand.get(2).getValue() && playerHand.get(4).getValue() == playerHand.get(3).getValue()) {
 			return true;
 		}
 		return false;
@@ -302,16 +290,7 @@ public class Hand {
 	//Value of the highest valued card
 	public Card highestValue() {
 		this.sortByValue();
-		return Hand[4];
-	}
-	
-	//Suit of the highest valued card
-	public Card highestDuplicate() {
-		this.sortByValue();
-		if(Hand[0].getValue() == 1) {
-			return Hand[0];
-		}
-		return Hand[4];
+		return playerHand.get(4);
 	}
 	
 	/**Comparing one hand to another 
@@ -323,6 +302,9 @@ public class Hand {
 	 * if 66 is returned == draw
 	 * 
 	 */
+	/* typically returns 1 if the first value (player) is higher, -1 if second value (opponent) is higher, or 0 if equal
+	 * not a huge deal but my dad was very adamant about you knowing this common practice
+	 */
 	public int compareTo(Hand oppHand) {
 		this.sortByValue();
 		oppHand.sortByValue();
@@ -331,7 +313,7 @@ public class Hand {
 		
 		boolean draw = true;
 		for(int i = 0; i < size; i++) {
-			if(this.Hand[i] != oppHand.Hand[i]) {
+			if(this.playerHand.get(i) != oppHand.playerHand.get(i)) {
 				draw = false;
 			}
 		}
@@ -341,7 +323,7 @@ public class Hand {
 		
 		//If Player has either a Royal && Straight Flush
 		if(this.hasFlush() == true && this.hasStraight() == true) {
-			if(this.Hand[2].getValue() == 12) {
+			if(this.playerHand.get(2).getValue() == 12) {
 				player = 10;
 			}else {
 				player = 9;	
@@ -382,7 +364,7 @@ public class Hand {
 		
 		//If opponent has either a Royal && Straight Flush
 		if(oppHand.hasFlush() == true && oppHand.hasStraight() == true) {
-			if(oppHand.Hand[2].getValue() == 12) {
+			if(oppHand.playerHand.get(2).getValue() == 12) {
 				opponent = 10;
 			}else {
 				opponent = 9;	
@@ -427,7 +409,7 @@ public class Hand {
 			case 10:
 				switch(opponent) {
 					case 10:
-						if(this.Hand[0].getSuit() > oppHand.Hand[0].getSuit()) {
+						if(this.playerHand.get(0).getSuit() > oppHand.playerHand.get(0).getSuit()) {
 							return 99;
 						} else {
 							return -99;
@@ -457,7 +439,7 @@ public class Hand {
 				case 10:
 					return -99;
 				case 9:
-				if(this.Hand[0].getSuit() > oppHand.Hand[0].getSuit()) {
+				if(this.playerHand.get(0).getSuit() > oppHand.playerHand.get(0).getSuit()) {
 					return 99;
 				} else {
 					return -99;
@@ -489,7 +471,7 @@ public class Hand {
 				case 8:
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+					if(this.playerHand.get(2).getValue() > oppHand.playerHand.get(2).getValue()) {
 						return 99;
 					}
 					else {
@@ -522,7 +504,7 @@ public class Hand {
 				case 7: 
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+					if(this.playerHand.get(2).getValue() > oppHand.playerHand.get(2).getValue()) {
 						return 99;
 					}
 					else {
@@ -555,12 +537,12 @@ public class Hand {
 				case 6: 
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.Hand[2].getSuit() > oppHand.Hand[2].getSuit()) {
+					if(this.playerHand.get(2).getSuit() > oppHand.playerHand.get(2).getSuit()) {
 						return 99;
-					} else if (this.Hand[2].getSuit() < oppHand.Hand[2].getSuit()) {
+					} else if (this.playerHand.get(2).getSuit() < oppHand.playerHand.get(2).getSuit()) {
 						return -99;
-					}else if(this.Hand[2].getSuit() == oppHand.Hand[2].getSuit()) {
-						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+					}else if(this.playerHand.get(2).getSuit() == oppHand.playerHand.get(2).getSuit()) {
+						if(this.playerHand.get(4).getValue() > oppHand.playerHand.get(4).getValue()) {
 							return 99;
 						}
 						else {
@@ -594,12 +576,12 @@ public class Hand {
 				case 5: 
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+					if(this.playerHand.get(4).getValue() > oppHand.playerHand.get(4).getValue()) {
 						return 99;
-					} else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+					} else if(this.playerHand.get(4).getValue() < oppHand.playerHand.get(4).getValue()) {
 						return -99;
-					} else if(this.Hand[4].getValue() == oppHand.Hand[4].getValue()) {
-						if(this.Hand[4].getSuit() > oppHand.Hand[4].getSuit()) {
+					} else if(this.playerHand.get(4).getValue() == oppHand.playerHand.get(4).getValue()) {
+						if(this.playerHand.get(4).getSuit() > oppHand.playerHand.get(4).getSuit()) {
 							return 99;
 						}else {
 							return -99;
@@ -632,7 +614,7 @@ public class Hand {
 				case 4:
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.Hand[2].getValue() > oppHand.Hand[2].getValue()) {
+					if(this.playerHand.get(2).getValue() > oppHand.playerHand.get(2).getValue()) {
 						return 99;
 					}
 					else {
@@ -670,10 +652,10 @@ public class Hand {
 						return -99;
 					}
 					else {
-						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+						if(this.playerHand.get(4).getValue() > oppHand.playerHand.get(4).getValue()) {
 							return 99;
 						}
-						else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+						else if(this.playerHand.get(4).getValue() < oppHand.playerHand.get(4).getValue()) {
 							return -99;
 						}
 						else {
@@ -712,10 +694,10 @@ public class Hand {
 						return -99;
 					}
 					else {
-						if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+						if(this.playerHand.get(4).getValue() > oppHand.playerHand.get(4).getValue()) {
 							return 99;
 						}
-						else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+						else if(this.playerHand.get(4).getValue() < oppHand.playerHand.get(4).getValue()) {
 							return -99;
 						}
 						else {
@@ -749,28 +731,20 @@ public class Hand {
 				case 0:
 					this.sortByValue();
 					oppHand.sortByValue();
-					if(this.highestValue().getValue() > oppHand.highestValue().getValue()) {
+					if(this.highestValue().getValue() > oppHand.highestValue().getValue())
 						return 99;
-					} else if(this.highestValue().getValue() < oppHand.highestValue().getValue()) {
+					else if(this.highestValue().getValue() < oppHand.highestValue().getValue())
 						return -99;
-					} else {
-						if(this.highestValue().getSuit() > oppHand.highestValue().getSuit()) {
+					else {
+						if(this.highestValue().getSuit() > oppHand.highestValue().getSuit())
 							return 99;
-						} else if(this.highestValue().getSuit() < oppHand.highestValue().getSuit()) {
+						else if(this.highestValue().getSuit() < oppHand.highestValue().getSuit())
 							return -99;
-						}
 					}
-					
-			}
+				}
 		}
 		
-		return 66;
-		
-		
-		
-		
-		
-		
+		return 66;	
 	}
 	
 }

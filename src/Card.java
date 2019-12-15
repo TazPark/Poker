@@ -72,5 +72,24 @@ public class Card {
 		return this.valueToString() + " of " + this.suitToString();
 	}
 	
+	//Override
+		/**
+		 * @param c - card to be compared
+		 * @return -1 if first card (this) is bigger,
+		 *          0 if cards are equal
+		 *          1 if second card (c) is bigger
+		 */
+		/*public int compare(Card c) {
+			if(this.suit > c.suit)
+				return -1;
+			else if(this.suit < c.suit)
+				return 1;
+			else if(this.value > c.value)
+				return -1;
+			else if(this.value < c.value)
+				return 1;
+			else
+				return 0;
+		}*/
 	
 }
