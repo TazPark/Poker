@@ -35,6 +35,18 @@ public class Hand {
 		for(int i=0 ; i< playerHand.size(); i++){ 
 			if (playerHand.get(i).equals(c)){
 				playerHand.remove(i);
+				Card tempCard = new Card(-1,-1);
+				this.addCard(tempCard);
+				size--;
+			}
+		}
+	}
+	
+	public void removeCard(Card c, Card u) {
+		for(int i=0 ; i< playerHand.size(); i++){ 
+			if (playerHand.get(i).equals(c)){
+				playerHand.remove(i);
+				this.addCard(u);
 				size--;
 			}
 		}
@@ -53,8 +65,8 @@ public class Hand {
 	//prints the cards in hand
 	public String printHand() {
 		String temp = "";
-		for(Card c : playerHand) {
-			temp += c.toString() + "\n";
+		for(Card card : playerHand) {
+			temp += card.toString() + "\n";
 		}
 		return temp;
 	}
