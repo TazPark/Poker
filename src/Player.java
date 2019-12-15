@@ -16,9 +16,38 @@ public class Player {
 		return this.name;
 	}
 	
-	/**public void discard() {
+	public void discard() {
+		int numCardsDiscard = 0;
 		
-	}*/
+		//For Computer
+		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
+			numCardsDiscard = 0;
+		}
+		else if(playerHand.hasFourOfAKind() == true) {
+			numCardsDiscard = 1;
+		}
+		else if(playerHand.hasFullHouse() == true) {
+			numCardsDiscard = 2;
+		}
+		else if(playerHand.hasFlush() == true) {
+			numCardsDiscard = 5;
+		}
+		else if(playerHand.hasStraight() == true) {
+			numCardsDiscard = 5;
+		}
+		else if(playerHand.hasTriplet() == true) {
+			numCardsDiscard = 2;
+		}
+		else if(playerHand.numPairs() == 2) {
+			numCardsDiscard = 3;
+		}
+		else if(playerHand.numPairs() == 1) {
+			numCardsDiscard = 3;
+		}
+		else{
+			numCardsDiscard = 5;
+		}
+	}
 	
 	public float wager(float min) {
 		Scanner keyboard = new Scanner(System.in);
@@ -31,6 +60,7 @@ public class Player {
 			wage = keyboard.nextFloat();
 			if(wage >= min) {
 				balance -= wage;
+				keyboard.close();
 				return wage;
 			} else if (wage < min && this.balance >= min){
 				do {
@@ -39,6 +69,7 @@ public class Player {
 					wage = keyboard.nextFloat();
 				}while(wage < min);
 				balance -= wage;
+				keyboard.close();
 				return wage;
 			} else if (wage < min && this.balance < min) {
 				System.out.println("Since you cannot wage the minimum, you will have to go all in");
@@ -50,25 +81,30 @@ public class Player {
 						System.out.println("Input the correct wage: " + this.getBalance());
 						wage = keyboard.nextFloat();
 					}while(wage != balance);
+					keyboard.close();
 					return wage;
 				}
 			}
 		}
 		
+		
 		//for computer
 		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
 			wage = this.balance;
 			this.balance = this.balance - this.balance;
+			keyboard.close();
 			return wage;
 		}
 		if(playerHand.hasFourOfAKind() == true) {
 			if((this.balance*.7) >= min) {
 				wage = this.balance * .7f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -76,10 +112,12 @@ public class Player {
 			if((this.balance*.6) >= min) {
 				this.balance = this.balance * .6f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -87,10 +125,12 @@ public class Player {
 			if((this.balance*.5) >= min) {
 				wage = this.balance * .5f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -98,10 +138,12 @@ public class Player {
 			if((this.balance) >= min) {
 				wage = this.balance * .4f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -109,10 +151,12 @@ public class Player {
 			if((this.balance*.3) >= min) {
 				wage = this.balance * .3f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -120,10 +164,12 @@ public class Player {
 			if((this.balance*.2) >= min) {
 				wage = this.balance * .2f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
@@ -131,13 +177,16 @@ public class Player {
 			if((this.balance*.1) >= min) {
 				wage = this.balance * .1f;
 				this.balance -= wage;
+				keyboard.close();
 				return wage;
 			}
 			else {
 				this.balance -= min;
+				keyboard.close();
 				return min;
 			}
 		}
+		keyboard.close();
 		return -1;
 	}
 	
