@@ -3,6 +3,8 @@ Poker Project OOP Fall '19
 
 -- This project is a game replicating the game of poker. 
 
+-- We are not trying to reinvent the wheel here!
+
 -- It will be a game between two, the player (you) and the computer.
 
 -- It is a very basic version of poker where you can bet on hands and win and lose the in-game currency.
