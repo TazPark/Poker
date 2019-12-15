@@ -2,9 +2,12 @@ public class Player {
 	
 	private Hand playerHand;
 	private float blanace;
+	private String name;
 	
-	public Player() {
-		playerHand = new Hand
+	public Player(String inputName, float balance) {
+		this.playerHand = new Hand();
+		this.name = inputName;
+		this.blanace = balance;
 	}
 	
 	public void deal() {
