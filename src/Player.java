@@ -17,7 +17,52 @@ public class Player {
 	}
 	
 	public void discard() {
+		
+		Scanner keyboard = new Scanner(System.in);
 		int numCardsDiscard = 0;
+		System.out.println("How many cards would you like to discard?");
+		numCardsDiscard = keyboard.nextInt();
+		Card tempCard = new Card();
+		String suit = "";
+		int suitNum = 0;
+		
+		if(!this.getName().equalsIgnoreCase("Bot Negreanu")) {
+			if(numCardsDiscard == 0) {
+				System.out.println("You have chose to not discard any cards.");
+			} else if(numCardsDiscard <= 5 && numCardsDiscard > 0) {
+				do {
+					this.showHand();
+					System.out.println("What card would you like to discard?");
+					System.out.println("Type the suit and then the value.");
+					System.out.println("(e.g. for 2 of Clubs. Type Clubs, then 2.");
+					suit = keyboard.next();
+					
+					if(!suit.equalsIgnoreCase("clubs") || !suit.equalsIgnoreCase("diamonds") || !suit.equalsIgnoreCase("hearts") || !suit.equalsIgnoreCase("spades")) {
+						do {
+							System.out.println("Invalid suit, please enter a valid suit: ");
+							suit = keyboard.next();
+						}while(!suit.equalsIgnoreCase("clubs") || !suit.equalsIgnoreCase("diamonds") || !suit.equalsIgnoreCase("hearts") || !suit.equalsIgnoreCase("spades"));
+					}
+					
+					if(suit.equalsIgnoreCase("clubs")) {
+						suitNum = 0;
+					} else if(suit.equalsIgnoreCase("diamonds")) {
+						suitNum = 1;
+					} else if(suit.equalsIgnoreCase("hearts")) {
+						suitNum = 2;
+					} else if(suit.equalsIgnoreCase("spades")) {
+						suitNum = 3;
+					}
+					
+					tempCard = new Card(keyboard.nextInt(), suitNum);
+					this.playerHand.removeCard(tempCard);
+					numCardsDiscard--;
+				}while(numCardsDiscard != 0);
+			}
+			return;
+		}
+		
+		
 		
 		//For Computer
 		if(playerHand.hasStraight() == true && playerHand.hasFlush() == true) {
@@ -25,6 +70,10 @@ public class Player {
 		}
 		else if(playerHand.hasFourOfAKind() == true) {
 			numCardsDiscard = 1;
+			this.playerHand.sortByValue();
+			if(this.playerHand) {
+				
+			}
 		}
 		else if(playerHand.hasFullHouse() == true) {
 			numCardsDiscard = 2;
