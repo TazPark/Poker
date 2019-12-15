@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class Card {
 	
 	public final static int Clubs = 0;
@@ -10,7 +12,7 @@ public class Card {
 	public final static int Queen = 12;
 	public final static int King = 13;
 	
-	private final int suit;
+private final int suit;
 	
 	private final int value;
 	
@@ -62,7 +64,7 @@ public class Card {
 	}
 	
 	public boolean equals(Card c) {
-		if(this.suit == c.suit && this.value == c.value)
+		if((this.suit == c.suit) && (this.value == c.value))
 			return true;
 		else
 			return false;
@@ -72,24 +74,42 @@ public class Card {
 		return this.valueToString() + " of " + this.suitToString();
 	}
 	
-	//Override
-		/**
-		 * @param c - card to be compared
-		 * @return -1 if first card (this) is bigger,
-		 *          0 if cards are equal
-		 *          1 if second card (c) is bigger
-		 */
-		/*public int compare(Card c) {
-			if(this.suit > c.suit)
-				return -1;
-			else if(this.suit < c.suit)
-				return 1;
-			else if(this.value > c.value)
-				return -1;
-			else if(this.value < c.value)
-				return 1;
-			else
-				return 0;
-		}*/
+	/**
+	 * @param c - card to be compared
+	 * @return -1 if first card (this) is bigger,
+	 *          0 if cards are equal
+	 *          1 if second card (c) is bigger.
+	 */
+	public int compareTo(Card c) {
+		if(this.suit > c.suit)
+			return -1;
+		else if(this.suit < c.suit)
+			return 1;
+		else if(this.value > c.value)
+			return -1;
+		else if(this.value < c.value)
+			return 1;
+		else
+			return 0;
+	}
+	
+	public static Comparator<Card> CVC = new Comparator<Card>() {
+		
+		public int compare(Card c1, Card c2) {
+			return (Integer.valueOf(c1.value).compareTo(Integer.valueOf(c2.value)));
+		}
+		
+	};
+	
+	public static Comparator<Card> CSC = new Comparator<Card>() {
+		
+		public int compare(Card c1, Card c2) {
+			return (Integer.valueOf(c1.suit).compareTo(Integer.valueOf(c2.suit)));
+		}
+		
+	};
+	
+	
+	
 	
 }
