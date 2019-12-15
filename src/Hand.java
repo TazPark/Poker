@@ -161,6 +161,15 @@ public class Hand {
 		return numpairs;
 	}
 	
+	public int highestPair() {
+		int highestPairNum = 0;
+		this.sortByValue();
+		
+		
+		
+		return highestPairNum;
+	}
+	
 	//True if there is a pair (two cards have the same value)
 	/** Fix This */
 	public boolean hasPairs() {
@@ -557,7 +566,19 @@ public class Hand {
 				case 6: 
 					return -99;
 				case 5: 
-					
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.Hand[4].getValue() > oppHand.Hand[4].getValue()) {
+						return 99;
+					} else if(this.Hand[4].getValue() < oppHand.Hand[4].getValue()) {
+						return -99;
+					} else if(this.Hand[4].getValue() == oppHand.Hand[4].getValue()) {
+						if(this.Hand[4].getSuit() > oppHand.Hand[4].getSuit()) {
+							return 99;
+						}else {
+							return -99;
+						}
+					}
 				case 4:
 					return 99;
 				case 3:
@@ -666,6 +687,20 @@ public class Hand {
 				case 2:
 					return -99;
 				case 0:
+					this.sortByValue();
+					oppHand.sortByValue();
+					if(this.highestValue().getValue() > oppHand.highestValue().getValue()) {
+						return 99;
+					} else if(this.highestValue().getValue() < oppHand.highestValue().getValue()) {
+						return -99;
+					} else {
+						if(this.highestValue().getSuit() > oppHand.highestValue().getSuit()) {
+							return 99;
+						} else if(this.highestValue().getSuit() < oppHand.highestValue().getSuit()) {
+							return -99;
+						}
+					}
+					
 			}
 		}
 		
