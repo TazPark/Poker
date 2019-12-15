@@ -29,6 +29,17 @@ public class Player {
 		
 		if(!this.name.equalsIgnoreCase("Bot Negreanu")) {
 			wage = keyboard.nextFloat();
+			if(wage >= min) {
+				return wage;
+			} else if (wage < min){
+				do {
+					System.out.println("Wage cannot be lower than the min.");
+					System.out.println("Please enter a valid wage: ");
+					wage = keyboard.nextFloat();
+				}while(wage < min);
+				
+				return wage;
+			}
 		}
 		
 	}
