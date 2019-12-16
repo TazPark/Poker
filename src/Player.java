@@ -21,7 +21,7 @@ public class Player {
 	}
 	
 	public void discard() {
-		
+		boolean cardTrue = false;
 		Scanner kb = new Scanner(System.in);
 		int numCardsDiscard = 0;
 		System.out.println("How many cards would you like to discard?");
@@ -35,33 +35,47 @@ public class Player {
 				System.out.println("You have chose to not discard any cards.");
 			} else if(numCardsDiscard <= 5 && numCardsDiscard > 0) {
 				do {
-					System.out.println("\n" + "Your hand:");
-					System.out.println(this.showHand().printHand());
-					System.out.println("What card would you like to discard?");
-					System.out.println("Type the suit and then the value.");
-					System.out.println("Type the number for the suit: ");
-					System.out.println("0 for clubs");
-					System.out.println("1 for diamonds");
-					System.out.println("2 for hearts");
-					System.out.println("3 for spades");
-					suitNum = kb.nextInt();
-					System.out.println("\n");
-					
-					if(!(suitNum >= 0 || suitNum <= 3)) {
-						do {
-							System.out.println("Invalid suit, please enter a valid suit: ");
-							suitNum = kb.nextInt();
-						}while(!(suitNum >= 0 || suitNum <= 3));
-					}
-					System.out.println("What is the value of the card?");
-					System.out.println("Type the number for the value: ");
-					System.out.println("1 for Ace");
-					System.out.println("11 for Jack");
-					System.out.println("12 for Queen");
-					System.out.println("13 for King");
-					tempCard = new Card(suitNum,kb.nextInt());
-					System.out.println("\n");
-					
+					do {
+						System.out.println("\n" + "Your hand:");
+						System.out.println(this.showHand().printHand());
+						System.out.println("What card would you like to discard?");
+						System.out.println("Type the suit and then the value.");
+						System.out.println("Type the number for the suit: ");
+						System.out.println("0 for clubs");
+						System.out.println("1 for diamonds");
+						System.out.println("2 for hearts");
+						System.out.println("3 for spades");
+						suitNum = kb.nextInt();
+						System.out.println("\n");
+						
+						if(!(suitNum >= 0 || suitNum <= 3)) {
+							do {
+								System.out.println("Invalid suit, please enter a valid suit: ");
+								suitNum = kb.nextInt();
+							}while(!(suitNum >= 0 || suitNum <= 3));
+						}
+						System.out.println("What is the value of the card?");
+						System.out.println("Type the number for the value: ");
+						System.out.println("1 for Ace");
+						System.out.println("11 for Jack");
+						System.out.println("12 for Queen");
+						System.out.println("13 for King");
+						tempCard = new Card(suitNum,kb.nextInt());
+						System.out.println("\n");
+						
+						for(int e = 0; e < this.showHand().handSize(); e++) {
+							if(this.showHand().returnCard(e).compareTo(tempCard) != 0) {
+								cardTrue = false;
+							} else {
+								cardTrue = true;
+								break;
+							}
+						}
+						if(cardTrue == false) {
+							System.out.println("The card you have selected is invalid, please try again");
+						}
+					}while(cardTrue == false);
+					cardTrue = false;
 					this.playerHand.removeCard(tempCard);
 					numCardsDiscard--;
 				}while(numCardsDiscard != 0);
