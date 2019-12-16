@@ -16,6 +16,10 @@ public class Hand {
 		size = 0;
 	}
 	
+	public Card returnCard(int index) {
+		return this.playerHand.get(index);
+	}
+	
 	public int getCardValueAt(int index) {
 		return this.playerHand.get(index).getValue();
 	}
